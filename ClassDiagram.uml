@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>Interface</OriginalElement>
+  <nodes>
+    <node x="268.6385604816637" y="240.0">Line</node>
+    <node x="373.6385604816637" y="480.0">ComplexCurve</node>
+    <node x="147.13856048166372" y="0.0">TypeOfPoint</node>
+    <node x="451.7787014230979" y="240.0">ComplexPoint</node>
+    <node x="394.6385604816637" y="360.0">ComplexLine</node>
+    <node x="309.5714285714285" y="610.0">Plot</node>
+    <node x="224.38856048166372" y="360.0">Curve</node>
+    <node x="20.099999999999966" y="690.0">AnimationTask</node>
+    <node x="194.67771620142287" y="80.0">Point</node>
+    <node x="206.2392857142856" y="800.0">Interface</node>
+    <node x="306.6385604816637" y="80.0">TypeOfLine</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Point" target="TypeOfPoint">
+      <point x="-19.49999999999997" y="-15.0" />
+      <point x="214.1777162014229" y="60.0" />
+      <point x="205.63856048166372" y="60.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="ComplexCurve" target="ComplexPoint">
+      <point x="56.0" y="-15.0" />
+      <point x="493.6385604816637" y="460.0" />
+      <point x="529.6326423097973" y="460.0" />
+      <point x="529.6326423097973" y="340.0" />
+      <point x="508.0287014230979" y="340.0" />
+      <point x="-6.25" y="15.0" />
+    </edge>
+    <edge source="Plot" target="TypeOfPoint">
+      <point x="-32.96428571428572" y="-15.0" />
+      <point x="312.1071428571428" y="590.0" />
+      <point x="171.59999999999997" y="590.0" />
+      <point x="171.59999999999997" y="60.0" />
+      <point x="182.2385604816637" y="60.0" />
+      <point x="-23.400000000000006" y="15.0" />
+    </edge>
+    <edge source="ComplexCurve" target="ComplexLine">
+      <point x="40.0" y="-15.0" />
+      <point x="477.6385604816637" y="460.0" />
+      <point x="469.0135604816637" y="460.0" />
+      <point x="14.875" y="15.0" />
+    </edge>
+    <edge source="ComplexLine" target="Line">
+      <point x="-47.599999999999966" y="-15.0" />
+      <point x="406.53856048166375" y="320.0" />
+      <point x="333.4385604816637" y="320.0" />
+      <point x="28.80000000000001" y="15.0" />
+    </edge>
+    <edge source="ComplexCurve" target="TypeOfLine">
+      <point x="-40.0" y="-15.0" />
+      <point x="397.6385604816637" y="450.0" />
+      <point x="362.1385604816637" y="450.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="Plot" target="Line">
+      <point x="-2.5357142857142776" y="-15.0" />
+      <point x="342.5357142857142" y="530.0" />
+      <point x="325.49570333880655" y="530.0" />
+      <point x="325.49570333880655" y="340.0" />
+      <point x="319.0385604816637" y="340.0" />
+      <point x="14.399999999999977" y="15.0" />
+    </edge>
+    <edge source="Interface" target="TypeOfPoint">
+      <point x="-43.19999999999993" y="-15.0" />
+      <point x="211.03928571428565" y="780.0" />
+      <point x="0.0" y="780.0" />
+      <point x="0.0" y="60.0" />
+      <point x="158.83856048166373" y="60.0" />
+      <point x="-46.79999999999998" y="15.0" />
+    </edge>
+    <edge source="Interface" target="Point">
+      <point x="-33.59999999999994" y="-15.0" />
+      <point x="220.63928571428568" y="770.0" />
+      <point x="9.599999999999966" y="770.0" />
+      <point x="9.599999999999966" y="130.0" />
+      <point x="197.27771620142286" y="130.0" />
+      <point x="-36.400000000000006" y="15.0" />
+    </edge>
+    <edge source="Plot" target="ComplexPoint">
+      <point x="22.821428571428555" y="-15.0" />
+      <point x="367.89285714285705" y="570.0" />
+      <point x="572.2635604816637" y="570.0" />
+      <point x="572.2635604816637" y="320.0" />
+      <point x="533.0287014230979" y="320.0" />
+      <point x="18.75" y="15.0" />
+    </edge>
+    <edge source="ComplexLine" target="ComplexPoint">
+      <point x="23.80000000000001" y="-15.0" />
+      <point x="477.9385604816637" y="340.0" />
+      <point x="483.0287014230979" y="340.0" />
+      <point x="-31.25" y="15.0" />
+    </edge>
+    <edge source="Curve" target="Point">
+      <point x="-11.571428571428584" y="-15.0" />
+      <point x="253.31713191023513" y="320.0" />
+      <point x="236.5880610290091" y="320.0" />
+      <point x="236.5880610290091" y="220.0" />
+      <point x="244.07771620142287" y="220.0" />
+      <point x="10.400000000000006" y="15.0" />
+    </edge>
+    <edge source="ComplexCurve" target="Point">
+      <point x="-56.0" y="-15.0" />
+      <point x="381.6385604816637" y="460.0" />
+      <point x="351.1385604816637" y="460.0" />
+      <point x="351.1385604816637" y="170.0" />
+      <point x="259.67771620142287" y="170.0" />
+      <point x="26.00000000000003" y="15.0" />
+    </edge>
+    <edge source="ComplexPoint" target="TypeOfPoint">
+      <point x="41.66666666666666" y="-15.0" />
+      <point x="555.9453680897645" y="220.0" />
+      <point x="577.5909414340447" y="220.0" />
+      <point x="577.5909414340447" y="50.0" />
+      <point x="252.43856048166373" y="50.0" />
+      <point x="46.80000000000001" y="15.0" />
+    </edge>
+    <edge source="AnimationTask" target="Plot">
+      <point x="48.75" y="-15.0" />
+      <point x="133.84999999999997" y="670.0" />
+      <point x="330.8714285714285" y="670.0" />
+      <point x="-14.199999999999989" y="15.0" />
+    </edge>
+    <edge source="Curve" target="TypeOfLine">
+      <point x="0.0" y="-15.0" />
+      <point x="264.8885604816637" y="310.0" />
+      <point x="258.1385604816637" y="310.0" />
+      <point x="258.1385604816637" y="200.0" />
+      <point x="314.56713191023516" y="200.0" />
+      <point x="-47.571428571428555" y="15.0" />
+    </edge>
+    <edge source="Plot" target="ComplexCurve">
+      <point x="7.607142857142833" y="-15.0" />
+      <point x="352.67857142857133" y="540.0" />
+      <point x="469.6385604816637" y="540.0" />
+      <point x="32.0" y="15.0" />
+    </edge>
+    <edge source="Line" target="Point">
+      <point x="-27.0" y="-15.0" />
+      <point x="277.6385604816637" y="190.0" />
+      <point x="249.2777162014229" y="190.0" />
+      <point x="15.600000000000023" y="15.0" />
+    </edge>
+    <edge source="Interface" target="AnimationTask">
+      <point x="-14.399999999999949" y="-15.0" />
+      <point x="239.83928571428567" y="750.0" />
+      <point x="117.59999999999997" y="750.0" />
+      <point x="32.5" y="15.0" />
+    </edge>
+    <edge source="Line" target="TypeOfLine">
+      <point x="9.0" y="-15.0" />
+      <point x="313.6385604816637" y="210.0" />
+      <point x="330.424274767378" y="210.0" />
+      <point x="-31.714285714285722" y="15.0" />
+    </edge>
+    <edge source="Plot" target="ComplexLine">
+      <point x="12.678571428571445" y="-15.0" />
+      <point x="357.74999999999994" y="550.0" />
+      <point x="512.1385604816637" y="550.0" />
+      <point x="512.1385604816637" y="450.0" />
+      <point x="498.7635604816637" y="450.0" />
+      <point x="44.625" y="15.0" />
+    </edge>
+    <edge source="Plot" target="Curve">
+      <point x="-7.60714285714289" y="-15.0" />
+      <point x="337.4642857142856" y="540.0" />
+      <point x="267.424274767378" y="540.0" />
+      <point x="267.424274767378" y="460.0" />
+      <point x="285.1385604816637" y="460.0" />
+      <point x="20.25" y="15.0" />
+    </edge>
+    <edge source="ComplexPoint" target="Point">
+      <point x="-41.66666666666663" y="-15.0" />
+      <point x="472.6120347564313" y="160.0" />
+      <point x="264.8777162014229" y="160.0" />
+      <point x="31.200000000000017" y="15.0" />
+    </edge>
+    <edge source="Plot" target="TypeOfLine">
+      <point x="32.96428571428572" y="-15.0" />
+      <point x="378.0357142857142" y="590.0" />
+      <point x="616.2491447728514" y="590.0" />
+      <point x="616.2491447728514" y="140.0" />
+      <point x="409.7099890530923" y="140.0" />
+      <point x="47.571428571428555" y="15.0" />
+    </edge>
+    <edge source="ComplexLine" target="TypeOfLine">
+      <point x="-23.799999999999955" y="-15.0" />
+      <point x="430.33856048166376" y="320.0" />
+      <point x="423.1179871373836" y="320.0" />
+      <point x="423.1179871373836" y="220.0" />
+      <point x="377.99570333880655" y="220.0" />
+      <point x="15.857142857142833" y="15.0" />
+    </edge>
+    <edge source="Interface" target="Plot">
+      <point x="4.80000000000004" y="-15.0" />
+      <point x="259.03928571428565" y="740.0" />
+      <point x="349.6714285714285" y="740.0" />
+      <point x="349.6714285714285" y="670.0" />
+      <point x="345.0714285714285" y="670.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="AnimationTask" target="Point">
+      <point x="-48.75" y="-15.0" />
+      <point x="36.349999999999966" y="670.0" />
+      <point x="49.310844280240815" y="670.0" />
+      <point x="49.310844280240815" y="140.0" />
+      <point x="202.47771620142288" y="140.0" />
+      <point x="-31.19999999999999" y="15.0" />
+    </edge>
+    <edge source="Plot" target="Point">
+      <point x="-22.821428571428555" y="-15.0" />
+      <point x="322.24999999999994" y="570.0" />
+      <point x="199.81713191023516" y="570.0" />
+      <point x="199.81713191023516" y="180.0" />
+      <point x="223.27771620142286" y="180.0" />
+      <point x="-10.400000000000006" y="15.0" />
+    </edge>
+    <edge source="Curve" target="Line">
+      <point x="11.571428571428555" y="-15.0" />
+      <point x="-28.80000000000001" y="15.0" />
+    </edge>
+    <edge source="Interface" target="ComplexPoint">
+      <point x="43.20000000000002" y="-15.0" />
+      <point x="297.43928571428563" y="780.0" />
+      <point x="636.8491447728514" y="780.0" />
+      <point x="636.8491447728514" y="290.0" />
+      <point x="570.5287014230979" y="290.0" />
+      <point x="56.25000000000003" y="15.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.839418526031102" x="473.38501812323807" y="184.01651228352802" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
