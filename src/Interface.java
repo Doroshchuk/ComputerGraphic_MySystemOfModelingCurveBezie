@@ -49,7 +49,7 @@ public class Interface {
                 firstInputPanel = new JPanel();
                 firstDrawingPanel = new JPanel();
                 setJPanels(firstInputPanel, firstDrawingPanel);
-                elementaryCurvePlot = new Plot(frame.getWidth() / 6 * 5, frame.getHeight());
+                elementaryCurvePlot = new Plot();
                 setUpInitPoints(elementaryCurvePlot, 10, 230, 25, 40, 50, 150, 200, 170, 240, 160);
 //                setUpInitPoints(elementaryCurvePlot, 10, 30, 25, 40, 50, -70, 200, 50, 240, -15);
                 setUpVertexes(elementaryCurvePlot, true);
@@ -61,7 +61,7 @@ public class Interface {
                 secondInputPanel = new JPanel();
                 secondDrawingPanel = new JPanel();
                 setJPanels(secondInputPanel, secondDrawingPanel);
-                sharkPlot = new Plot(frame.getWidth() / 6 * 5, frame.getHeight());
+                sharkPlot = new Plot();
                 ArrayList<Point> sharksVertexes = sharkPlot.buildSharksPlot();
                 ComplexPoint firstPoint = new ComplexPoint(sharksVertexes.get(0), new Point(0, 0));
                 sharkPlot.createVertexes(firstPoint, sharksVertexes);
@@ -74,7 +74,7 @@ public class Interface {
                 thirdInputPanel = new JPanel();
                 thirdDrawingPanel = new JPanel();
                 setJPanels(thirdInputPanel, thirdDrawingPanel);
-                gridPlot = new Plot(frame.getWidth() / 6 * 5, frame.getHeight());
+                gridPlot = new Plot();
                 setUpInitPoints(gridPlot, 10, 230, 25, 40, 50, 150, 200, 170, 240, 160);
                 gridPlot.setPlotIsGrid(true);
                 setUpVertexes(gridPlot, true);

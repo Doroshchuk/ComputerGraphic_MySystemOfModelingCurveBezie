@@ -7,8 +7,6 @@ import java.util.ArrayList;
 
 public class Plot extends JPanel {
     private double unitVectorSize;
-    private int width;
-    private int height;
     private Graphics2D graphics;
     private double x0;
     private double y0;
@@ -95,7 +93,7 @@ public class Plot extends JPanel {
         // All coordinates to the left of center canvas are negative
         // All coordinates below center canvas are negative
         this.graphics = (Graphics2D) graphics;
-        this.graphics.translate(width / 2, height / 2);
+        this.graphics.translate(getWidth() / 2, getHeight() / 2);
         drawLinesForCoordinateGrid();
         drawAxis();
         calculateCurveLength();
@@ -106,34 +104,32 @@ public class Plot extends JPanel {
         graphics.setFont(new Font("TimesRoman", Font.BOLD, 13));
         switch (display) {
             case "Re":
-                graphics.drawString("yRe", (int) unitVectorSize, -height / 2 + 15);
-                graphics.drawString("xRe", (int) (width / 2 - unitVectorSize * 1.5), -15);
+                graphics.drawString("yRe", (int) unitVectorSize, -getHeight() / 2 + 15);
+                graphics.drawString("xRe", (int) (getWidth() / 2 - unitVectorSize * 1.5), -15);
                 break;
             case "Im":
-                graphics.drawString("yIm", (int) unitVectorSize, -height / 2 + 15);
-                graphics.drawString("xIm", (int) (width / 2 - unitVectorSize * 1.5), -15);
+                graphics.drawString("yIm", (int) unitVectorSize, -getHeight() / 2 + 15);
+                graphics.drawString("xIm", (int) (getWidth() / 2 - unitVectorSize * 1.5), -15);
                 break;
         }
     }
 
-    public Plot(int width, int height) {
+    public Plot() {
         unitVectorSize = 20;
         x0 = 0;
         y0 = 0;
-        this.width = width;
-        this.height = height;
         points = new ArrayList<>();
         vertexes = new ArrayList<>();
     }
 
     private void drawLinesForCoordinateGrid() {
-        for (int i = 0; i < width; i += unitVectorSize) {
+        for (int i = 0; i < getWidth(); i += unitVectorSize) {
             //vertical lines
-            drawLine(new Point(x0 - width / 2 + i, y0 + height), new Point(x0 - width / 2 + i, y0 - height), TypeOfLine.COORDINATEGridLine);
+            drawLine(new Point(x0 - getWidth() / 2 + i, y0 + getHeight()), new Point(x0 - getWidth() / 2 + i, y0 - getHeight()), TypeOfLine.COORDINATEGridLine);
         }
-        for (int i = 0; i < height; i += unitVectorSize) {
+        for (int i = 0; i < getHeight(); i += unitVectorSize) {
             //horizontal lines
-            drawLine(new Point(x0 - width, y0 - height / 2 + i), new Point(x0 + width, y0 - height / 2 + i), TypeOfLine.COORDINATEGridLine);
+            drawLine(new Point(x0 - getWidth(), y0 - getHeight() / 2 + i), new Point(x0 + getWidth(), y0 - getHeight() / 2 + i), TypeOfLine.COORDINATEGridLine);
         }
         drawLine(new Point(unitVectorSize, -2), new Point(unitVectorSize, 2), TypeOfLine.COORDINATEGridLine);
         drawLine(new Point(-2, unitVectorSize), new Point(2, unitVectorSize), TypeOfLine.COORDINATEGridLine);
@@ -141,13 +137,13 @@ public class Plot extends JPanel {
 
     private void drawAxis() {
         //x and y lines
-        drawLine(new Point(0, -height / 2), new Point(0, height / 2), TypeOfLine.AXISLine);
-        drawLine(new Point(-10, height / 2 - 10), new Point(0, height / 2), TypeOfLine.AXISLine);
-        drawLine(new Point(10, height / 2 - 10), new Point(0, height / 2), TypeOfLine.AXISLine);
+        drawLine(new Point(0, -getHeight() / 2), new Point(0, getHeight() / 2), TypeOfLine.AXISLine);
+        drawLine(new Point(-10, getHeight() / 2 - 10), new Point(0, getHeight() / 2), TypeOfLine.AXISLine);
+        drawLine(new Point(10, getHeight() / 2 - 10), new Point(0, getHeight() / 2), TypeOfLine.AXISLine);
 
-        drawLine(new Point(-width / 2, 0), new Point(width / 2, 0), TypeOfLine.AXISLine);
-        drawLine(new Point(width / 2 - 10, -10), new Point(width / 2, 0), TypeOfLine.AXISLine);
-        drawLine(new Point(width / 2 - 10, 10), new Point(width / 2, 0), TypeOfLine.AXISLine);
+        drawLine(new Point(-getWidth() / 2, 0), new Point(getWidth() / 2, 0), TypeOfLine.AXISLine);
+        drawLine(new Point(getWidth() / 2 - 10, -10), new Point(getWidth() / 2, 0), TypeOfLine.AXISLine);
+        drawLine(new Point(getWidth() / 2 - 10, 10), new Point(getWidth() / 2, 0), TypeOfLine.AXISLine);
         graphics.setColor(Color.BLACK);
         graphics.setFont(new Font("TimesRoman", Font.PLAIN, 11));
         graphics.drawString("20", (int) unitVectorSize - 12, 10);
