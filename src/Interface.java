@@ -16,7 +16,7 @@ public class Interface {
     private JTabbedPane tabbedPane;
     private JFrame frame;
     private Plot elementaryCurvePlot, sharkPlot, gridPlot;
-    private Font font = new Font("Arial", Font.PLAIN, 10);
+    private Font font = new Font("TimesRoman", Font.PLAIN, 10);
     private String firstTabName = "Кривая";
     private String secondTabName = "Контур";
     private String thirdTabName = "Сетка";
