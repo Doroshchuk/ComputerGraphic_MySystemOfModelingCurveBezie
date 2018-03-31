@@ -51,7 +51,6 @@ public class Interface {
                 setJPanels(firstInputPanel, firstDrawingPanel);
                 elementaryCurvePlot = new Plot();
                 setUpInitPoints(elementaryCurvePlot, 10, 230, 25, 40, 50, 150, 200, 170, 240, 160);
-//                setUpInitPoints(elementaryCurvePlot, 10, 30, 25, 40, 50, -70, 200, 50, 240, -15);
                 setUpVertexes(elementaryCurvePlot, true);
                 firstDrawingPanel.add(elementaryCurvePlot);
                 firstMainPanel.add(firstDrawingPanel, BorderLayout.WEST);

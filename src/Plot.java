@@ -97,9 +97,7 @@ public class Plot extends JPanel {
         drawLinesForCoordinateGrid();
         drawAxis();
         calculateCurveLength();
-        if (plotIsGrid){
-            createPlotOfGrid();
-        } else createPlot();
+        createPlot(plotIsGrid);
         graphics.setColor(Color.BLACK);
         graphics.setFont(new Font("TimesRoman", Font.BOLD, 13));
         switch (display) {
@@ -151,7 +149,7 @@ public class Plot extends JPanel {
         graphics.setFont(new Font("TimesRoman", Font.BOLD, 15));
     }
 
-    private void drawLine(Point point1, Point point2, TypeOfLine typeOfLine) {
+    public void drawLine(Point point1, Point point2, TypeOfLine typeOfLine) {
         switch (typeOfLine) {
             case COORDINATEGridLine:
                 graphics.setStroke(new BasicStroke(1f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
@@ -181,52 +179,6 @@ public class Plot extends JPanel {
                 break;
         }
         graphics.draw(new Line2D.Double(point1.getX(), -point1.getY(), point2.getX(), -point2.getY()));
-    }
-
-    private void drawCurve(Curve curve){
-        ArrayList<Line> lines = curve.calculateLinesOnTheCurve();
-        for (Line line : lines) {
-            drawLine(line.getStartPoint(), line.getEndPoint(), line.getTypeOfLine());
-        }
-    }
-
-    private void drawCurve(ComplexCurve complexCurve){
-        ArrayList<ComplexLine> complexLines = complexCurve.calculateLinesOnTheCurve();
-        for (ComplexLine complexLine : complexLines) {
-            switch (display){
-                case "Re":
-                    drawLine(complexLine.getStartPoint().getPointRe(), complexLine.getEndPoint().getPointRe(), complexLine.getTypeOfLine());
-                    break;
-                case "Im":
-                    drawLine(complexLine.getStartPoint().getPointIm(), complexLine.getEndPoint().getPointIm(), complexLine.getTypeOfLine());
-                    break;
-            }
-        }
-    }
-
-    private void drawPlot(ArrayList<Point> points){
-        complexVertexes = new ArrayList<>();
-        for (int i = 0; i < points.size() - 3; i += 3) {
-            drawCurve(new Curve(points.get(i), points.get(i + 1), points.get(i + 2), points.get(i + 3), TypeOfLine.CURVELine));
-        }
-        initReImVertexes();
-    }
-
-    private void drawGrid(ArrayList<ComplexPoint> complexVertexes){
-        ArrayList<ComplexPoint> initComplexPoints = new ArrayList<>();
-        initComplexPoints.addAll(complexVertexes);
-        for (int i = 0; i < initComplexPoints.size() - 3; i += 3) {
-            drawCurve(new ComplexCurve(initComplexPoints.get(i), initComplexPoints.get(i + 1), initComplexPoints.get(i + 2), initComplexPoints.get(i + 3), TypeOfLine.CURVELine));
-        }
-    }
-
-    private void createPlotOfGrid(){
-        if (visibilityOfQuadrangles) {
-            drawCharacterQuadrangles(vertexes);
-            drawVertexes(vertexes);
-            visibilityOfQuadrangles = false;
-        }
-        drawGrid(complexVertexes);
     }
 
     private void drawCharacterQuadrangles(ArrayList<Point> points) {
@@ -269,13 +221,19 @@ public class Plot extends JPanel {
         }
     }
 
-    private void createPlot() {
+    private void createPlot(boolean plotIsGrid) {
         if (visibilityOfQuadrangles) {
             drawCharacterQuadrangles(vertexes);
             drawVertexes(vertexes);
             visibilityOfQuadrangles = false;
         }
-        drawPlot(vertexes);
+        if (plotIsGrid){
+            Grid grid = new Grid(this);
+            grid.drawGrid(complexVertexes);
+        } else{
+            PlotOfElementaryCurve plotOfElementaryCurve = new PlotOfElementaryCurve(this);
+            plotOfElementaryCurve.drawPlot(vertexes);
+        }
     }
 
     private void calculateCurveLength() {
