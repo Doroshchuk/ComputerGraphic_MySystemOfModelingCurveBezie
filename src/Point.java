@@ -1,6 +1,7 @@
 public class Point {
     private double x;
     private double y;
+    private double z;
     private TypeOfPoint typeOfPoint;
 
     public Point(double x, double y){
@@ -8,9 +9,22 @@ public class Point {
         this.y = y;
     }
 
+    public Point(double x, double y, double z){
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
     public Point(double x, double y, TypeOfPoint typeOfPoint){
         this.x = x;
         this.y = y;
+        this.typeOfPoint = typeOfPoint;
+    }
+
+    public Point(double x, double y, double z, TypeOfPoint typeOfPoint){
+        this.x = x;
+        this.y = y;
+        this.z = z;
         this.typeOfPoint = typeOfPoint;
     }
 
@@ -28,6 +42,14 @@ public class Point {
 
     public void setY(double y) {
         this.y = y;
+    }
+
+    public double getZ() {
+        return z;
+    }
+
+    public void setZ(double z) {
+        this.z = z;
     }
 
     public TypeOfPoint getTypeOfPoint() {
