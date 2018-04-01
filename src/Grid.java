@@ -21,7 +21,7 @@ public class Grid {
         }
     }
 
-    public void drawGrid(ArrayList<ComplexPoint> complexVertexes){
+    public void draw(ArrayList<ComplexPoint> complexVertexes){
         ArrayList<ComplexPoint> initComplexPoints = new ArrayList<>();
         initComplexPoints.addAll(complexVertexes);
         for (int i = 0; i < initComplexPoints.size() - 3; i += 3) {

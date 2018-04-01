@@ -1,3 +1,5 @@
+import org.apache.commons.math3.complex.Complex;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -12,14 +14,16 @@ public class Interface {
     private JPanel firstInputPanel, firstDrawingPanel;
     private JPanel secondInputPanel, secondDrawingPanel;
     private JPanel thirdInputPanel, thirdDrawingPanel;
+    private JPanel fourthInputPanel, fourthDrawingPanel;
     private JPanel buttonsPanel;
     private JTabbedPane tabbedPane;
     private JFrame frame;
-    private Plot elementaryCurvePlot, sharkPlot, gridPlot;
+    private Plot elementaryCurvePlot, sharkPlot, gridPlot, surfacePlot;
     private Font font = new Font("TimesRoman", Font.PLAIN, 10);
     private String firstTabName = "Кривая";
     private String secondTabName = "Контур";
     private String thirdTabName = "Сетка";
+    private String fourthTabName = "Поверхность";
 
     public static void main(String[] args) {
         new Interface();
@@ -51,6 +55,7 @@ public class Interface {
                 setJPanels(firstInputPanel, firstDrawingPanel);
                 elementaryCurvePlot = new Plot();
                 setUpInitPoints(elementaryCurvePlot, 10, 230, 25, 40, 50, 150, 200, 170, 240, 160);
+                elementaryCurvePlot.setTypeOfPlot("elementaryCurve");
                 setUpVertexes(elementaryCurvePlot, true);
                 firstDrawingPanel.add(elementaryCurvePlot);
                 firstMainPanel.add(firstDrawingPanel, BorderLayout.WEST);
@@ -63,7 +68,8 @@ public class Interface {
                 sharkPlot = new Plot();
                 ArrayList<Point> sharksVertexes = sharkPlot.buildSharksPlot();
                 ComplexPoint firstPoint = new ComplexPoint(sharksVertexes.get(0), new Point(0, 0));
-                sharkPlot.createVertexes(firstPoint, sharksVertexes);
+                sharkPlot.createComplexVertexes(firstPoint, sharksVertexes);
+                sharkPlot.setTypeOfPlot("elementaryCurve");
                 setUpVertexes(sharkPlot, true);
                 secondDrawingPanel.add(sharkPlot);
                 secondMainPanel.add(secondDrawingPanel, BorderLayout.WEST);
@@ -75,15 +81,28 @@ public class Interface {
                 setJPanels(thirdInputPanel, thirdDrawingPanel);
                 gridPlot = new Plot();
                 setUpInitPoints(gridPlot, 10, 230, 25, 40, 50, 150, 200, 170, 240, 160);
-                gridPlot.setPlotIsGrid(true);
+                gridPlot.setTypeOfPlot("grid");
                 setUpVertexes(gridPlot, true);
                 thirdDrawingPanel.add(gridPlot);
                 thirdMainPanel.add(thirdDrawingPanel, BorderLayout.WEST);
                 thirdMainPanel.add(thirdInputPanel, BorderLayout.EAST);
 
+                JPanel fourthMainPanel = new JPanel();
+                fourthInputPanel = new JPanel();
+                fourthDrawingPanel = new JPanel();
+                setJPanels(fourthInputPanel, fourthDrawingPanel);
+                surfacePlot = new Plot();
+                setUpComplexVertexes(surfacePlot, 150, 120, 50, 40, 40, 22, 50, 30);
+                surfacePlot.setTypeOfPlot("surface");
+                setUpVertexes(surfacePlot, true);
+                fourthDrawingPanel.add(surfacePlot);
+                fourthMainPanel.add(fourthDrawingPanel, BorderLayout.WEST);
+                fourthMainPanel.add(fourthInputPanel, BorderLayout.EAST);
+
                 tabbedPane.addTab(firstTabName, firstMainPanel);
                 tabbedPane.addTab(secondTabName, secondMainPanel);
                 tabbedPane.addTab(thirdTabName, thirdMainPanel);
+                tabbedPane.addTab(fourthTabName, fourthMainPanel    );
                 content.add(tabbedPane, BorderLayout.CENTER);
                 frame.add(content);
                 inputDataForThePlot();
@@ -328,8 +347,13 @@ public class Interface {
                 }
                 if (tabbedPane.getTitleAt(tabbedPane.getSelectedIndex()).equals(thirdTabName)) {
                     gridPlot.setVisibilityOfQuadrangles(true);
-                    gridPlot.validate();
-                    gridPlot.repaint();
+                    thirdDrawingPanel.validate();
+                    thirdDrawingPanel.repaint();
+                }
+                if (tabbedPane.getTitleAt(tabbedPane.getSelectedIndex()).equals(fourthTabName)) {
+                    surfacePlot.setVisibilityOfQuadrangles(true);
+                    fourthDrawingPanel.validate();
+                    fourthDrawingPanel.repaint();
                 }
             } else {
                 if (tabbedPane.getTitleAt(tabbedPane.getSelectedIndex()).equals(firstTabName)) {
@@ -346,6 +370,11 @@ public class Interface {
                     gridPlot.setVisibilityOfQuadrangles(false);
                     thirdDrawingPanel.validate();
                     thirdDrawingPanel.repaint();
+                }
+                if (tabbedPane.getTitleAt(tabbedPane.getSelectedIndex()).equals(fourthTabName)) {
+                    surfacePlot.setVisibilityOfQuadrangles(false);
+                    fourthDrawingPanel.validate();
+                    fourthDrawingPanel.repaint();
                 }
             }
         });
@@ -381,7 +410,16 @@ public class Interface {
         points.add(secondPointRe);
         points.add(thirdPointRe);
         points.add(endPointRe);
-        plot.createVertexes(startPoint, points);
+        plot.createComplexVertexes(startPoint, points);
+    }
+
+    private void setUpComplexVertexes(Plot plot, float a0_Re, float a0_Im, float a1_Re, float a1_Im, float a2_Re, float a2_Im, float a3_Re, float a3_Im){
+        ArrayList<Complex> coefficients = new ArrayList<>();
+        coefficients.add(new Complex(a0_Re, a0_Im));
+        coefficients.add(new Complex(a1_Re, a1_Im));
+        coefficients.add(new Complex(a2_Re, a2_Im));
+        coefficients.add(new Complex(a3_Re, a3_Im));
+        plot.createComplexVertexes(coefficients);
     }
 
     private void setUpVertexes(Plot plot, boolean choice){

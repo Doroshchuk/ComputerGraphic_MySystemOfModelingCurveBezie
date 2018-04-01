@@ -14,7 +14,7 @@ public class PlotOfElementaryCurve {
         }
     }
 
-    public void drawPlot(ArrayList<Point> points){
+    public void draw(ArrayList<Point> points){
         plot.setComplexVertexes(new ArrayList<>());
         for (int i = 0; i < points.size() - 3; i += 3) {
             drawCurve(new Curve(points.get(i), points.get(i + 1), points.get(i + 2), points.get(i + 3), TypeOfLine.CURVELine));

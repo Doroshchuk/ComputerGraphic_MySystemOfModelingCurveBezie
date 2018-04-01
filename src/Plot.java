@@ -15,7 +15,7 @@ public class Plot extends JPanel {
     private ArrayList<Point> vertexesRe, vertexesIm;
     private ArrayList<Point> points, vertexes;
     private String display;
-    private boolean plotIsGrid;
+    private String typeOfPlot;
 
     public boolean isVisibilityOfQuadrangles() {
         return visibilityOfQuadrangles;
@@ -73,12 +73,12 @@ public class Plot extends JPanel {
         this.vertexes = vertexes;
     }
 
-    public boolean getPlotIsGrid() {
-        return plotIsGrid;
+    public String getTypeOfPlot() {
+        return typeOfPlot;
     }
 
-    public void setPlotIsGrid(boolean plotIsGrid) {
-        this.plotIsGrid = plotIsGrid;
+    public void setTypeOfPlot(String typeOfPlot) {
+        this.typeOfPlot = typeOfPlot;
     }
 
     @Override
@@ -97,7 +97,7 @@ public class Plot extends JPanel {
         drawLinesForCoordinateGrid();
         drawAxis();
         calculateCurveLength();
-        createPlot(plotIsGrid);
+        createPlot(typeOfPlot);
         graphics.setColor(Color.BLACK);
         graphics.setFont(new Font("TimesRoman", Font.BOLD, 13));
         switch (display) {
@@ -201,7 +201,7 @@ public class Plot extends JPanel {
         return new ComplexPoint(currentPointRe, new Point(currentXIm, currentYIm));
     }
 
-    public void createVertexes(ComplexPoint startPoint, ArrayList<Point> pointsRe) {
+    public void createComplexVertexes(ComplexPoint startPoint, ArrayList<Point> pointsRe) {
         complexVertexes = new ArrayList<>();
         vertexesRe = new ArrayList<>();
         vertexesIm = new ArrayList<>();
@@ -221,19 +221,53 @@ public class Plot extends JPanel {
         }
     }
 
-    private void createPlot(boolean plotIsGrid) {
+    private void createPlot(String typeOfPlot) {
         if (visibilityOfQuadrangles) {
             drawCharacterQuadrangles(vertexes);
             drawVertexes(vertexes);
             visibilityOfQuadrangles = false;
         }
-        if (plotIsGrid){
-            Grid grid = new Grid(this);
-            grid.drawGrid(complexVertexes);
-        } else{
-            PlotOfElementaryCurve plotOfElementaryCurve = new PlotOfElementaryCurve(this);
-            plotOfElementaryCurve.drawPlot(vertexes);
+        switch (typeOfPlot){
+            case "elementaryCurve":
+                PlotOfElementaryCurve plotOfElementaryCurve = new PlotOfElementaryCurve(this);
+                plotOfElementaryCurve.draw(vertexes);
+                break;
+            case "grid":
+                Grid grid = new Grid(this);
+                grid.draw(complexVertexes);
+                break;
+            case "surface":
+                Surface surface = new Surface(this);
+                surface.draw(complexVertexes);
+                break;
         }
+    }
+
+    public void createComplexVertexes(ArrayList<Complex> coefficients){
+        ArrayList<ComplexPoint> complexVertexes = new ArrayList<>();
+        Complex r0_x = (coefficients.get(0).subtract(coefficients.get(2))).multiply(Complex.I);
+        Complex r0_y = coefficients.get(0).add(coefficients.get(2));
+        Complex r0_z = coefficients.get(1).multiply(-1).multiply(Complex.I);
+
+        Complex r1_x = (coefficients.get(0).subtract(coefficients.get(2)).subtract(coefficients.get(3))).multiply(Complex.I);
+        Complex r1_y = coefficients.get(0).add(coefficients.get(2)).add(coefficients.get(3));
+        Complex r1_z = coefficients.get(1).multiply(-1).multiply(Complex.I);
+
+        Complex r2_x = (coefficients.get(0).subtract(coefficients.get(2)).subtract(coefficients.get(3).multiply(2))).multiply(Complex.I);
+        Complex r2_y = coefficients.get(0).add(coefficients.get(2)).add(coefficients.get(3).multiply(2));
+        Complex r2_z = (coefficients.get(3).subtract(coefficients.get(1))).multiply(Complex.I);
+
+        Complex r3_x = (coefficients.get(0).subtract(coefficients.get(2)).subtract(coefficients.get(3).multiply(2))).multiply(Complex.I);
+        Complex r3_y = coefficients.get(0).add(coefficients.get(2)).add(coefficients.get(3).multiply(4));
+        Complex r3_z = (coefficients.get(3).multiply(3).subtract(coefficients.get(1))).multiply(Complex.I);
+
+        complexVertexes.add(new ComplexPoint(new Point(r0_x.getReal(), r0_y.getReal(), r0_z.getReal()), new Point(r0_x.getImaginary(), r0_y.getImaginary(), r0_z.getImaginary())));
+        complexVertexes.add(new ComplexPoint(new Point(r1_x.getReal(), r1_y.getReal(), r1_z.getReal()), new Point(r1_x.getImaginary(), r1_y.getImaginary(), r1_z.getImaginary())));
+        complexVertexes.add(new ComplexPoint(new Point(r2_x.getReal(), r0_y.getReal(), r2_z.getReal()), new Point(r2_x.getImaginary(), r2_y.getImaginary(), r2_z.getImaginary())));
+        complexVertexes.add(new ComplexPoint(new Point(r3_x.getReal(), r3_y.getReal(), r3_z.getReal()), new Point(r3_x.getImaginary(), r3_y.getImaginary(), r3_z.getImaginary())));
+        vertexesRe = new ArrayList<>();
+        vertexesIm = new ArrayList<>();
+        setComplexVertexes(complexVertexes);
     }
 
     private void calculateCurveLength() {
