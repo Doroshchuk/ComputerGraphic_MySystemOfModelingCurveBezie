@@ -263,6 +263,47 @@ public class Interface {
         });
     }
 
+    private void createInterfaceOfFourthInputPanel(JCheckBox checkBox){
+        JRadioButton btnOfRealPartDisplay = new JRadioButton("Re");
+        JRadioButton btnOfImaginaryPartDisplay = new JRadioButton("Im");
+        initRadioButton(fourthInputPanel, surfacePlot, btnOfRealPartDisplay, btnOfImaginaryPartDisplay);
+
+        createLabel("a0 = ", new int[]{20, 90, 30, 20}, fourthInputPanel);
+        JTextField a0_ReTF = createTextField(new int[]{50, 90, 40, 20}, "150", fourthInputPanel);
+        createLabel("i", new int[]{95, 90, 2, 20}, fourthInputPanel);
+        JTextField a0_ImTF = createTextField(new int[]{101, 90, 40, 20}, "120", fourthInputPanel);
+
+        createLabel("a1 = ", new int[]{20, 120, 30, 20}, fourthInputPanel);
+        JTextField a1_ReTF = createTextField(new int[]{50, 120, 40, 20}, "50", fourthInputPanel);
+        createLabel("i", new int[]{95, 120, 2, 20}, fourthInputPanel);
+        JTextField a1_ImTF = createTextField(new int[]{101, 120, 40, 20}, "40", fourthInputPanel);
+
+        createLabel("a2 = ", new int[]{20, 150, 30, 20}, fourthInputPanel);
+        JTextField a2_ReTF = createTextField(new int[]{50, 150, 40, 20}, "40", fourthInputPanel);
+        createLabel("i", new int[]{95, 150, 2, 20}, fourthInputPanel);
+        JTextField a2_ImTF = createTextField(new int[]{101, 150, 40, 20}, "22", fourthInputPanel);
+
+        createLabel("a3 = ", new int[]{20, 180, 30, 20}, fourthInputPanel);
+        JTextField a3_ReTF = createTextField(new int[]{50, 180, 40, 20}, "50", fourthInputPanel);
+        createLabel("i", new int[]{95, 180, 2, 20}, fourthInputPanel);
+        JTextField a3_ImTF = createTextField(new int[]{101, 180, 40, 20}, "30", fourthInputPanel);
+
+        ArrayList<JTextField> txtFields = new ArrayList<>();
+        txtFields.add(a0_ReTF);
+        txtFields.add(a0_ImTF);
+        txtFields.add(a1_ReTF);
+        txtFields.add(a1_ImTF);
+        txtFields.add(a2_ReTF);
+        txtFields.add(a2_ImTF);
+        txtFields.add(a3_ReTF);
+        txtFields.add(a3_ImTF);
+
+        JButton btn = createButton(new int[]{170, 125, 40, 40}, "Images/executing.png", fourthInputPanel, (ActionEvent event) -> {
+            checkBox.setSelected(false);
+            drawNewSurface(fourthDrawingPanel, surfacePlot, btnOfRealPartDisplay.isSelected(), txtFields);
+        });
+    }
+
     private void drawNewPlot(JPanel panel, Plot plot, boolean choice, ArrayList<JTextField> txtFields){
         float x0_Re = parseFloat(txtFields.get(0).getText());
         float y0_Re = parseFloat(txtFields.get(1).getText());
@@ -277,6 +318,24 @@ public class Interface {
 
         setUpInitPoints(plot, x0_Re, y0_Re, x0_Im, y0_Im, x1_Re, y1_Re, x2_Re, y2_Re, x3_Re, y3_Re);
         setUpVertexes(plot, choice);
+
+        panel.add(plot);
+        panel.validate();
+        panel.repaint();
+    }
+
+    private void drawNewSurface(JPanel panel, Plot plot, boolean choice, ArrayList<JTextField> txtFields){
+        float a0_Re = parseFloat(txtFields.get(0).getText());
+        float a0_Im = parseFloat(txtFields.get(1).getText());
+        float a1_Re = parseFloat(txtFields.get(2).getText());
+        float a1_Im = parseFloat(txtFields.get(3).getText());
+        float a2_Re = parseFloat(txtFields.get(4).getText());
+        float a2_Im = parseFloat(txtFields.get(5).getText());
+        float a3_Re = parseFloat(txtFields.get(6).getText());
+        float a3_Im = parseFloat(txtFields.get(7).getText());
+
+        setUpComplexVertexes(surfacePlot, a0_Re, a0_Im, a1_Re, a1_Im, a2_Re, a2_Im, a3_Re, a3_Im);
+        setUpVertexes(surfacePlot, choice);
 
         panel.add(plot);
         panel.validate();
@@ -385,6 +444,7 @@ public class Interface {
         createInterfaceOfFirstInputPanel(checkBox);
         createInterfaceOfSecondInputPanel(checkBox);
         createInterfaceOfThirdInputPanel(checkBox);
+        createInterfaceOfFourthInputPanel(checkBox);
     }
 
     private void createInterfaceOfSecondInputPanel(JCheckBox checkBox){
