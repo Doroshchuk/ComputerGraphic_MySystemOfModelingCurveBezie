@@ -8,14 +8,15 @@ public class Grid {
     }
 
     private void drawCurve(ComplexCurve complexCurve){
+        plot.setShapeLines(new ArrayList<>());
         ArrayList<ComplexLine> complexLines = complexCurve.calculateLinesOnTheCurve();
         for (ComplexLine complexLine : complexLines) {
             switch (plot.getDisplay()){
                 case "Re":
-                    plot.drawLine(complexLine.getStartPoint().getPointRe(), complexLine.getEndPoint().getPointRe(), complexLine.getTypeOfLine());
+                    plot.getShapeLines().add(new Line(complexLine.getStartPoint().getPointRe(), complexLine.getEndPoint().getPointRe(), complexLine.getTypeOfLine()));
                     break;
                 case "Im":
-                    plot.drawLine(complexLine.getStartPoint().getPointIm(), complexLine.getEndPoint().getPointIm(), complexLine.getTypeOfLine());
+                    plot.getShapeLines().add(new Line(complexLine.getStartPoint().getPointIm(), complexLine.getEndPoint().getPointIm(), complexLine.getTypeOfLine()));
                     break;
             }
         }

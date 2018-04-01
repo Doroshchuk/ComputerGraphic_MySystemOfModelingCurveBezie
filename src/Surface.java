@@ -22,6 +22,7 @@ public class Surface {
     }
 
     private void drawCurve(ComplexCurve complexCurve){
+        plot.setShapeLines(new ArrayList<>());
         ArrayList<ComplexLine> complexLines = complexCurve.calculateLinesOnTheCurve();
         ArrayList<Line> lines = new ArrayList<>();
         for (ComplexLine complexLine : complexLines) {
@@ -34,10 +35,9 @@ public class Surface {
                     break;
             }
         }
-        lines = transformLines(lines);
-        for (Line line: lines) {
-            plot.drawLine(line.getStartPoint(), line.getEndPoint(), line.getTypeOfLine());
-        }
+        plot.setShapeLines(transformLines(lines));
+        plot.setGridLines(transformLines(plot.getGridLines()));
+        plot.setAxisLines(transformLines(plot.getAxisLines()));
     }
 
     public void draw(ArrayList<ComplexPoint> complexVertexes){
