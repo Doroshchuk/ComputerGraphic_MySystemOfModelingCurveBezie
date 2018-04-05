@@ -102,7 +102,7 @@ public class Interface {
                 tabbedPane.addTab(firstTabName, firstMainPanel);
                 tabbedPane.addTab(secondTabName, secondMainPanel);
                 tabbedPane.addTab(thirdTabName, thirdMainPanel);
-                tabbedPane.addTab(fourthTabName, fourthMainPanel    );
+                tabbedPane.addTab(fourthTabName, fourthMainPanel);
                 content.add(tabbedPane, BorderLayout.CENTER);
                 frame.add(content);
                 inputDataForThePlot();
@@ -270,23 +270,27 @@ public class Interface {
 
         createLabel("a0 = ", new int[]{20, 90, 30, 20}, fourthInputPanel);
         JTextField a0_ReTF = createTextField(new int[]{50, 90, 40, 20}, "150", fourthInputPanel);
-        createLabel("i", new int[]{95, 90, 2, 20}, fourthInputPanel);
-        JTextField a0_ImTF = createTextField(new int[]{101, 90, 40, 20}, "120", fourthInputPanel);
+        createLabel("+", new int[]{95, 90, 10, 20}, fourthInputPanel);
+        JTextField a0_ImTF = createTextField(new int[]{110, 90, 40, 20}, "120", fourthInputPanel);
+        createLabel("i", new int[]{153, 90, 2, 20}, fourthInputPanel);
 
         createLabel("a1 = ", new int[]{20, 120, 30, 20}, fourthInputPanel);
         JTextField a1_ReTF = createTextField(new int[]{50, 120, 40, 20}, "50", fourthInputPanel);
-        createLabel("i", new int[]{95, 120, 2, 20}, fourthInputPanel);
-        JTextField a1_ImTF = createTextField(new int[]{101, 120, 40, 20}, "40", fourthInputPanel);
+        createLabel("+", new int[]{95, 120, 10, 20}, fourthInputPanel);
+        JTextField a1_ImTF = createTextField(new int[]{110, 120, 40, 20}, "40", fourthInputPanel);
+        createLabel("i", new int[]{153, 120, 2, 20}, fourthInputPanel);
 
         createLabel("a2 = ", new int[]{20, 150, 30, 20}, fourthInputPanel);
         JTextField a2_ReTF = createTextField(new int[]{50, 150, 40, 20}, "40", fourthInputPanel);
-        createLabel("i", new int[]{95, 150, 2, 20}, fourthInputPanel);
-        JTextField a2_ImTF = createTextField(new int[]{101, 150, 40, 20}, "22", fourthInputPanel);
+        createLabel("+", new int[]{95, 150, 10, 20}, fourthInputPanel);
+        JTextField a2_ImTF = createTextField(new int[]{110, 150, 40, 20}, "22", fourthInputPanel);
+        createLabel("i", new int[]{153, 150, 2, 20}, fourthInputPanel);
 
         createLabel("a3 = ", new int[]{20, 180, 30, 20}, fourthInputPanel);
         JTextField a3_ReTF = createTextField(new int[]{50, 180, 40, 20}, "50", fourthInputPanel);
-        createLabel("i", new int[]{95, 180, 2, 20}, fourthInputPanel);
-        JTextField a3_ImTF = createTextField(new int[]{101, 180, 40, 20}, "30", fourthInputPanel);
+        createLabel("+", new int[]{95, 180, 10, 20}, fourthInputPanel);
+        JTextField a3_ImTF = createTextField(new int[]{110, 180, 40, 20}, "30", fourthInputPanel);
+        createLabel("i", new int[]{153, 180, 2, 20}, fourthInputPanel);
 
         ArrayList<JTextField> txtFields = new ArrayList<>();
         txtFields.add(a0_ReTF);
@@ -302,6 +306,96 @@ public class Interface {
             checkBox.setSelected(false);
             drawNewSurface(fourthDrawingPanel, surfacePlot, btnOfRealPartDisplay.isSelected(), txtFields);
         });
+
+        createLabel("<html>Перемещение</html>", new int[] {70, 210, 250, 20}, fourthInputPanel);
+        createLabel("∆x: ", new int[] {40, 240, 30, 20}, fourthInputPanel);
+        JTextField deltaX = createTextField(new int[] {60, 240, 60, 20}, "", fourthInputPanel);
+
+        createLabel("∆y: ", new int[] {40, 270, 30, 20}, fourthInputPanel);
+        JTextField deltaY = createTextField(new int[] {60, 270, 60, 20}, "", fourthInputPanel);
+
+        createLabel("∆z: ", new int[] {40, 300, 30, 20}, fourthInputPanel);
+        JTextField deltaZ = createTextField(new int[] {60, 300, 60, 20}, "", fourthInputPanel);
+
+        JButton btnOfMoving = createButton(new int[] {170, 260, 40, 40}, "Images/moving.png", fourthInputPanel, event -> {
+            float delta_x = Float.parseFloat(deltaX.getText());
+            float delta_y = Float.parseFloat(deltaY.getText());
+            float delta_z = Float.parseFloat(deltaZ.getText());
+
+            fourthDrawingPanel.remove(surfacePlot);
+            surfacePlot.move(delta_x, delta_y, delta_z);
+            fourthDrawingPanel.add(surfacePlot);
+            fourthDrawingPanel.repaint();
+            fourthDrawingPanel.revalidate();
+        });
+
+        createLabel("<html>Вращение</html>", new int[] {100, 330, 250, 20}, fourthInputPanel);
+        JRadioButton btnOfRotatingByX = new JRadioButton("X");
+        btnOfRotatingByX.setMnemonic(KeyEvent.VK_X);
+        btnOfRotatingByX.setActionCommand("X");
+        btnOfRotatingByX.setSelected(false);
+
+        JRadioButton btnOfRotatingByY = new JRadioButton("Y");
+        btnOfRotatingByY.setMnemonic(KeyEvent.VK_Y);
+        btnOfRotatingByY.setActionCommand("Y");
+        btnOfRotatingByY.setSelected(false);
+
+        JRadioButton btnOfRotatingByZ = new JRadioButton("Z");
+        btnOfRotatingByZ.setMnemonic(KeyEvent.VK_Z);
+        btnOfRotatingByZ.setActionCommand("Z");
+        btnOfRotatingByZ.setSelected(true);
+
+        ButtonGroup group = new ButtonGroup();
+        group.add(btnOfRotatingByX);
+        group.add(btnOfRotatingByY);
+        group.add(btnOfRotatingByZ);
+
+        Box verticalBox = Box.createVerticalBox();
+        verticalBox.add(btnOfRotatingByX);
+        verticalBox.add(btnOfRotatingByY);
+        verticalBox.add(btnOfRotatingByZ);
+        btnOfRotatingByX.setVisible(true);
+        btnOfRotatingByY.setVisible(true);
+        btnOfRotatingByZ.setVisible(true);
+
+        createLabel("x : ", new int[] {40, 360, 30, 20}, fourthInputPanel);
+        JTextField x = createTextField(new int[] {60, 360, 60, 20}, "", fourthInputPanel);
+
+        createLabel("y : ", new int[] {40, 390, 30, 20}, fourthInputPanel);
+        JTextField y = createTextField(new int[] {60, 390, 60, 20}, "", fourthInputPanel);
+
+        createLabel("z : ", new int[] {40, 420, 30, 20}, fourthInputPanel);
+        JTextField z = createTextField(new int[] {60, 420, 60, 20}, "", fourthInputPanel);
+
+        createLabel("∠ : ", new int[] {40, 450, 20, 20}, fourthInputPanel);
+        JTextField angleForRotation = createTextField(new int[] {60, 450, 60, 20}, "", fourthInputPanel);
+
+        JButton btnOfRotation = createButton(new int[]{170, 430, 40, 40}, "Images/rotating.png", fourthInputPanel, event -> {
+            float x0 = Float.parseFloat(x.getText());
+            float y0 = Float.parseFloat(y.getText());
+            float z0 = Float.parseFloat(z.getText());
+            double angle = Double.parseDouble(angleForRotation.getText());
+
+            String axis = "";
+            if (btnOfRotatingByX.isSelected()){
+                axis = "X";
+            } else if (btnOfRotatingByY.isSelected()){
+                axis = "Y";
+            } else if (btnOfRotatingByZ.isSelected()){
+                axis = "Z";
+            }
+
+            surfacePlot.setRotationAngle(surfacePlot.getRotationAngle() + angle);
+            fourthDrawingPanel.remove(surfacePlot);
+            surfacePlot.rotate(new Point(x0, y0, z0), angle, axis);
+            fourthDrawingPanel.add(surfacePlot);
+            fourthDrawingPanel.validate();
+            fourthDrawingPanel.repaint();
+        });
+
+        fourthInputPanel.add(verticalBox);
+        verticalBox.setBounds(180, 360, 40, 65);
+        verticalBox.setVisible(true);
     }
 
     private void drawNewPlot(JPanel panel, Plot plot, boolean choice, ArrayList<JTextField> txtFields){

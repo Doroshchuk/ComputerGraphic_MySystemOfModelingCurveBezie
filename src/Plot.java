@@ -19,6 +19,15 @@ public class Plot extends JPanel {
     private ArrayList<Line> axisLines;
     private ArrayList<Line> gridLines;
     private ArrayList<Line> shapeLines;
+    private double rotationAngle;
+
+    public double getRotationAngle() {
+        return rotationAngle;
+    }
+
+    public void setRotationAngle(double rotationAngle) {
+        this.rotationAngle = rotationAngle;
+    }
 
     public ArrayList<Line> getAxisLines() {
         return axisLines;
@@ -125,7 +134,6 @@ public class Plot extends JPanel {
         axisLines = new ArrayList<>();
         shapeLines = new ArrayList<>();
         createLinesForCoordinateGrid();
-        calculateCurveLength();
         createPlot(typeOfPlot);
         graphics.setColor(Color.BLACK);
         graphics.setFont(new Font("TimesRoman", Font.BOLD, 13));
@@ -162,6 +170,7 @@ public class Plot extends JPanel {
         gridLines = new ArrayList<>();
         axisLines = new ArrayList<>();
         shapeLines = new ArrayList<>();
+        rotationAngle = 0;
     }
 
     private void createLinesForCoordinateGrid() {
@@ -290,6 +299,7 @@ public class Plot extends JPanel {
             case "elementaryCurve":
                 createLinesForAxis2D();
                 PlotOfElementaryCurve plotOfElementaryCurve = new PlotOfElementaryCurve(this);
+                plotOfElementaryCurve.calculateCurveLength(complexVertexes);
                 plotOfElementaryCurve.draw(vertexes);
                 drawLines(gridLines);
                 drawLines(axisLines);
@@ -347,25 +357,69 @@ public class Plot extends JPanel {
         setComplexVertexes(complexVertexes);
     }
 
-    private void calculateCurveLength() {
-        double u = 0.1;
-        int counter = 0;
-        for (int i = 0; i < complexVertexes.size() - 3; i += 3){
-            counter++;
-            System.out.println("curve = " + counter);
-            for (double t = 0; t < 1 + u; t += u) {
-                Complex x_1 = complexVertexes.get(i + 1).getComplexX().subtract(complexVertexes.get(i).getComplexX()).multiply(3).multiply(Math.pow(1 - t, 2));
-                Complex x_2 = complexVertexes.get(i + 2).getComplexX().subtract(complexVertexes.get(i + 1).getComplexX()).multiply(6).multiply((1 - t) * t);
-                Complex x_3 = complexVertexes.get(i + 3).getComplexX().subtract(complexVertexes.get(i + 2).getComplexX()).multiply(3).multiply(Math.pow(t, 2));
-                Complex x_ = x_1.add(x_2).add(x_3);
-                Complex y_1 = complexVertexes.get(i + 1).getComplexY().subtract(complexVertexes.get(i).getComplexY()).multiply(3).multiply(Math.pow(1 - t, 2));
-                Complex y_2 = complexVertexes.get(i + 2).getComplexY().subtract(complexVertexes.get(i + 1).getComplexY()).multiply(6).multiply((1 - t) * t);
-                Complex y_3 = complexVertexes.get(i + 3).getComplexY().subtract(complexVertexes.get(i + 2).getComplexY()).multiply(3).multiply(Math.pow(t, 2));
-                Complex y_ = y_1.add(y_2).add(y_3);
-                Complex result = x_.pow(2).add(y_.pow(2));
-                System.out.println("u = " + t + ": length = " + result.abs());
-            }
+    public void rotate(Point controlPoint, double angle, String axis){
+        double alpha = - (angle * Math.PI / 180);
+        ArrayList<ComplexPoint> rotatedComplexVertexes = new ArrayList<>();
+        Point pointRe, pointIm;
+        switch (axis){
+            case "X":
+                for (ComplexPoint complexPoint: complexVertexes){
+                    pointRe = rotateCoordinateByX(complexPoint.getPointRe(), controlPoint, alpha);
+                    pointIm = rotateCoordinateByX(complexPoint.getPointIm(), controlPoint, alpha);
+                    rotatedComplexVertexes.add(new ComplexPoint(pointRe, pointIm));
+                }
+                break;
+            case "Y":
+                for (ComplexPoint complexPoint: complexVertexes){
+                    pointRe = rotateCoordinateByY(complexPoint.getPointRe(), controlPoint, alpha);
+                    pointIm = rotateCoordinateByY(complexPoint.getPointIm(), controlPoint, alpha);
+                    rotatedComplexVertexes.add(new ComplexPoint(pointRe, pointIm));
+                }
+                break;
+            case "Z":
+                for (ComplexPoint complexPoint: complexVertexes){
+                    pointRe = rotateCoordinateByZ(complexPoint.getPointRe(), controlPoint, alpha);
+                    pointIm = rotateCoordinateByZ(complexPoint.getPointIm(), controlPoint, alpha);
+                    rotatedComplexVertexes.add(new ComplexPoint(pointRe, pointIm));
+                }
+                break;
         }
+        complexVertexes = rotatedComplexVertexes;
+    }
+
+    private Point rotateCoordinateByZ(Point currentPoint, Point controlPoint, double angle){
+        double x = currentPoint.getX() * Math.cos(angle) - currentPoint.getY() * Math.sin(angle) - controlPoint.getX() * Math.cos(angle) + controlPoint.getY() * Math.sin(angle) + controlPoint.getX();
+        double y = currentPoint.getX() * Math.sin(angle) + currentPoint.getY() * Math.cos(angle) - controlPoint.getX() * Math.sin(angle) - controlPoint.getY() * Math.cos(angle) + controlPoint.getY();
+        double z = currentPoint.getZ();
+        return new Point(x, y, z);
+    }
+
+    private Point rotateCoordinateByX(Point currentPoint, Point controlPoint, double angle){
+        double x = currentPoint.getX();
+        double y = currentPoint.getY() * Math.cos(angle) - currentPoint.getZ() * Math.sin(angle) - controlPoint.getY() * Math.cos(angle) + controlPoint.getZ() * Math.sin(angle) + controlPoint.getY();
+        double z = currentPoint.getY() * Math.sin(angle) + currentPoint.getZ() * Math.cos(angle) - controlPoint.getY() * Math.sin(angle) - controlPoint.getZ() * Math.cos(angle) + controlPoint.getZ();
+        return new Point(x, y, z);
+    }
+
+    private Point rotateCoordinateByY(Point currentPoint, Point controlPoint, double angle){
+        double x = currentPoint.getX() * Math.cos(angle) + currentPoint.getZ() * Math.sin(angle) - controlPoint.getX() * Math.cos(angle) - controlPoint.getZ() * Math.sin(angle) + controlPoint.getX();
+        double y = currentPoint.getY();
+        double z = - currentPoint.getX() * Math.sin(angle) + currentPoint.getZ() * Math.cos(angle) + controlPoint.getX() * Math.sin(angle) - controlPoint.getZ() * Math.cos(angle) + controlPoint.getZ();
+        return new Point(x, y, z);
+    }
+
+    public void move(float delta_x, float delta_y, float delta_z){
+        ArrayList<ComplexPoint> movedComplexVertexes = new ArrayList<>();
+        for (ComplexPoint complexPoint: complexVertexes){
+            Point pointRe = moveCoordinate(complexPoint.getPointRe(), delta_x, delta_y, delta_z);
+            Point pointIm = moveCoordinate(complexPoint.getPointIm(), delta_x, delta_y, delta_z);
+            movedComplexVertexes.add(new ComplexPoint(pointRe, pointIm));
+        }
+        complexVertexes = movedComplexVertexes;
+    }
+
+    private Point moveCoordinate(Point point, float delta_x, float delta_y, float delta_z){
+        return new Point(point.getX() + delta_x, point.getY() + delta_y, point.getZ() + delta_z);
     }
 
     public double getDistance(Point p1, Point p2) {
