@@ -35,14 +35,14 @@ public class ComplexCurve extends ComplexLine {
         this.thirdPoint = thirdPoint;
     }
 
-    public Map<Double, ArrayList<ComplexPoint>> calculatePointsOnTheCurves() {
+    public Map<Double, ArrayList<ComplexPoint>> calculatePointsOnTheCurves(TypeOfModeling typeOfModeling) {
         Map<Double, ArrayList<ComplexPoint>> curves =  new HashMap<>();
         ArrayList<ComplexPoint> pointsOfTheCurve;
         double key = 0;
         for (double v = 0; v <= 1; v += step) {
             pointsOfTheCurve = new ArrayList<>();
             for (double u = 0; u < 1 + step; u += step) {
-                pointsOfTheCurve.add(calculateCoordinatesNewComplexPoint(u, v));
+                addNewComplexPoint(pointsOfTheCurve, typeOfModeling, u, v);
             }
             curves.put(key, pointsOfTheCurve);
             key++;
@@ -50,12 +50,20 @@ public class ComplexCurve extends ComplexLine {
         for (double u = 0; u <= 1; u += step) {
             pointsOfTheCurve = new ArrayList<>();
             for (double v = 0; v < 1 + step; v += step) {
-                pointsOfTheCurve.add(calculateCoordinatesNewComplexPoint(u, v));
+                addNewComplexPoint(pointsOfTheCurve, typeOfModeling, u, v);
             }
             curves.put(key, pointsOfTheCurve);
             key++;
         }
         return curves;
+    }
+
+    private void addNewComplexPoint(ArrayList<ComplexPoint> pointsOfTheCurve, TypeOfModeling typeOfModeling, double v, double u){
+        if (typeOfModeling.equals(TypeOfModeling.NORMAL))
+            pointsOfTheCurve.add(calculateCoordinatesNewComplexPoint(v, u));
+        else if(typeOfModeling.equals(TypeOfModeling.DIFFERENT)){
+            pointsOfTheCurve.add(calculateCoordinatesNewComplexPoint(v, (u + Math.pow(v, 2))));
+        }
     }
 
     private ComplexPoint calculateCoordinatesNewComplexPoint(double u, double v) {
@@ -81,9 +89,9 @@ public class ComplexCurve extends ComplexLine {
         return new ComplexPoint(new Point(x.getReal(), y.getReal()), new Point(x.getImaginary(), y.getImaginary()));
     }
 
-    public ArrayList<ComplexLine> calculateLinesOnTheCurve(){
+    public ArrayList<ComplexLine> calculateLinesOnTheCurve(TypeOfModeling typeOfModeling){
         ArrayList<ComplexLine> linesOfTheCurve = new ArrayList<>();
-        Map<Double, ArrayList<ComplexPoint>> curves = calculatePointsOnTheCurves();
+        Map<Double, ArrayList<ComplexPoint>> curves = calculatePointsOnTheCurves(typeOfModeling);
         TypeOfLine typeOfLine;
         for (double key: curves.keySet()){
             if (key == 0) typeOfLine = TypeOfLine.COMPLEXCurveLine;

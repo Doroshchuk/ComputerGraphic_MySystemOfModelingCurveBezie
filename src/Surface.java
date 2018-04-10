@@ -2,9 +2,11 @@ import java.util.ArrayList;
 
 public class Surface {
     private Plot plot;
+    private TypeOfModeling typeOfModeling;
 
-    public Surface(Plot plot){
+    public Surface(Plot plot, TypeOfModeling typeOfModeling){
         this.plot = plot;
+        this.typeOfModeling = typeOfModeling;
     }
 
     private Point executeCavalierProjection(Point point){
@@ -22,8 +24,7 @@ public class Surface {
     }
 
     private void drawCurve(ComplexCurve complexCurve){
-        plot.setShapeLines(new ArrayList<>());
-        ArrayList<ComplexLine> complexLines = complexCurve.calculateLinesOnTheCurve();
+        ArrayList<ComplexLine> complexLines = complexCurve.calculateLinesOnTheCurve(typeOfModeling);
         ArrayList<Line> lines = new ArrayList<>();
         for (ComplexLine complexLine : complexLines) {
             switch (plot.getDisplay()){
@@ -35,7 +36,7 @@ public class Surface {
                     break;
             }
         }
-        plot.setShapeLines(transformLines(lines));
+        plot.addShapeLines(transformLines(lines));
         plot.setGridLines(transformLines(plot.getGridLines()));
         plot.setAxisLines(transformLines(plot.getAxisLines()));
     }

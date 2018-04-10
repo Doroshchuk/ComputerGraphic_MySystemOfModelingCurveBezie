@@ -20,6 +20,15 @@ public class Plot extends JPanel {
     private ArrayList<Line> gridLines;
     private ArrayList<Line> shapeLines;
     private double rotationAngle;
+    private boolean additionalPlot;
+
+    public boolean isAdditionalPlot() {
+        return additionalPlot;
+    }
+
+    public void setAdditionalPlot(boolean additionalPlot) {
+        this.additionalPlot = additionalPlot;
+    }
 
     public double getRotationAngle() {
         return rotationAngle;
@@ -271,8 +280,7 @@ public class Plot extends JPanel {
 
     public void createComplexVertexes(ComplexPoint startPoint, ArrayList<Point> pointsRe) {
         complexVertexes = new ArrayList<>();
-        vertexesRe = new ArrayList<>();
-        vertexesIm = new ArrayList<>();
+        beforeInitializeVerexesReAndIm();
         complexVertexes.add(startPoint);
 
         for (int i = 1; i < pointsRe.size(); i++) {
@@ -280,6 +288,11 @@ public class Plot extends JPanel {
             complexVertexes.add(point);
             startPoint = point;
         }
+    }
+
+    public void beforeInitializeVerexesReAndIm(){
+        vertexesRe = new ArrayList<>();
+        vertexesIm = new ArrayList<>();
     }
 
     public void initReImVertexes(){
@@ -315,13 +328,22 @@ public class Plot extends JPanel {
                 break;
             case "surface":
                 createLinesForAxis3D();
-                Surface surface = new Surface(this);
+                shapeLines = new ArrayList<>();
+                if (additionalPlot){
+                    Surface additionalSurface = new Surface(this, TypeOfModeling.DIFFERENT);
+                    additionalSurface.draw(complexVertexes);
+                }
+                Surface surface = new Surface(this, TypeOfModeling.NORMAL);
                 surface.draw(complexVertexes);
                 drawLines(gridLines);
                 drawLines(axisLines);
                 drawLines(shapeLines);
                 break;
         }
+    }
+
+    public void addShapeLines(ArrayList<Line> lines){
+        shapeLines.addAll(lines);
     }
 
     private void drawLines(ArrayList<Line> lines){
@@ -352,8 +374,7 @@ public class Plot extends JPanel {
         complexVertexes.add(new ComplexPoint(new Point(r1_x.getReal(), r1_y.getReal(), r1_z.getReal()), new Point(r1_x.getImaginary(), r1_y.getImaginary(), r1_z.getImaginary())));
         complexVertexes.add(new ComplexPoint(new Point(r2_x.getReal(), r0_y.getReal(), r2_z.getReal()), new Point(r2_x.getImaginary(), r2_y.getImaginary(), r2_z.getImaginary())));
         complexVertexes.add(new ComplexPoint(new Point(r3_x.getReal(), r3_y.getReal(), r3_z.getReal()), new Point(r3_x.getImaginary(), r3_y.getImaginary(), r3_z.getImaginary())));
-        vertexesRe = new ArrayList<>();
-        vertexesIm = new ArrayList<>();
+        beforeInitializeVerexesReAndIm();
         setComplexVertexes(complexVertexes);
     }
 

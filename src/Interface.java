@@ -396,6 +396,24 @@ public class Interface {
         fourthInputPanel.add(verticalBox);
         verticalBox.setBounds(180, 360, 40, 65);
         verticalBox.setVisible(true);
+
+        JButton createAdditionalSurface = createButton(new int[]{100, 500, 40, 40}, "Images/add.png", fourthInputPanel, (ActionEvent event) -> {
+            checkBox.setSelected(false);
+            fourthDrawingPanel.remove(surfacePlot);
+            surfacePlot.setAdditionalPlot(true);
+            fourthDrawingPanel.add(surfacePlot);
+            fourthDrawingPanel.revalidate();
+            fourthDrawingPanel.repaint();
+        });
+
+        JButton deleteAdditionalSurface = createButton(new int[]{160, 500, 40, 40}, "Images/delete.png", fourthInputPanel, (ActionEvent event) -> {
+            checkBox.setSelected(false);
+            fourthDrawingPanel.remove(surfacePlot);
+            surfacePlot.setAdditionalPlot(false);
+            fourthDrawingPanel.add(surfacePlot);
+            fourthDrawingPanel.revalidate();
+            fourthDrawingPanel.repaint();
+        });
     }
 
     private void drawNewPlot(JPanel panel, Plot plot, boolean choice, ArrayList<JTextField> txtFields){

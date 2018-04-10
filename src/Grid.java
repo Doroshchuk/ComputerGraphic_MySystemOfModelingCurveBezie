@@ -9,7 +9,7 @@ public class Grid {
 
     private void drawCurve(ComplexCurve complexCurve){
         plot.setShapeLines(new ArrayList<>());
-        ArrayList<ComplexLine> complexLines = complexCurve.calculateLinesOnTheCurve();
+        ArrayList<ComplexLine> complexLines = complexCurve.calculateLinesOnTheCurve(TypeOfModeling.NORMAL);
         for (ComplexLine complexLine : complexLines) {
             switch (plot.getDisplay()){
                 case "Re":
